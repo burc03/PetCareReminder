@@ -30,11 +30,11 @@
 
             <!-- LOGO -->
             <ImageView
-                android:layout_width="160dp"
-                android:layout_height="120dp"
-                android:src="@mipmap/petlogo"
+                android:layout_width="219dp"
+                android:layout_height="146dp"
                 android:layout_marginBottom="24dp"
-                android:contentDescription="Pet Logo"/>
+                android:contentDescription="Pet Logo"
+                android:src="@mipmap/petlogo" />
 
             <!-- PET NAME -->
             <com.google.android.material.textfield.TextInputLayout

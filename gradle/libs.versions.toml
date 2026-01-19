@@ -15,6 +15,10 @@ constraintlayout = "2.1.4"
 # 🔹 ROOM
 room = "2.6.1"
 
+# 🔹 SPLASH SCREEN (🆕 EKLENDİ)
+coreSplashscreen = "1.0.1"
+
+
 [libraries]
 
 # 🔹 Test
@@ -31,6 +35,10 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 # 🔹 ROOM
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# 🔹 SPLASH SCREEN (🆕 EKLENDİ)
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

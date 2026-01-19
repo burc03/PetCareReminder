@@ -7,10 +7,11 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.PetCareReminder">
 
-        <!-- LOGIN (UYGULAMA AÇILIŞI) -->
+        <!-- LOGIN (UYGULAMA AÇILIŞI + SPLASH) -->
         <activity
             android:name=".ui.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.PetCareReminder.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,12 +38,12 @@
             android:name=".ui.AddPetActivity"
             android:exported="false" />
 
-        <!-- 🆕 VACCINE LIST -->
+        <!-- VACCINE LIST -->
         <activity
             android:name=".ui.VaccineListActivity"
             android:exported="false" />
 
-        <!-- 🆕 ADD VACCINE -->
+        <!-- ADD VACCINE -->
         <activity
             android:name=".ui.AddVaccineActivity"
             android:exported="false" />

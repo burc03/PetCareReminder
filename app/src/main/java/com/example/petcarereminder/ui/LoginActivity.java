@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // Author: Burcu Arıcı
     private SharedPreferences prefs;
 
     @Override

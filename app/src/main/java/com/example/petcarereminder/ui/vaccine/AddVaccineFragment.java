@@ -19,6 +19,12 @@ import com.example.petcarereminder.data.local.VaccineEntity;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.Calendar;
+import java.util.concurrent.Executors;
+
+/*
+ * Author: Hayri Yılmaz
+ * Feature: Add Vaccine with Room Database (Background Thread using Executor)
+ */
 
 public class AddVaccineFragment extends Fragment {
 
@@ -82,15 +88,21 @@ public class AddVaccineFragment extends Fragment {
             vaccine.date = date;
             vaccine.note = note;
 
-            AppDatabase.getInstance(requireContext())
-                    .vaccineDao()
-                    .insert(vaccine);
+            // ✅ BACKGROUND THREAD (EXECUTOR)
+            Executors.newSingleThreadExecutor().execute(() -> {
 
-            Toast.makeText(requireContext(),
-                    "Aşı eklendi",
-                    Toast.LENGTH_SHORT).show();
+                AppDatabase.getInstance(requireContext())
+                        .vaccineDao()
+                        .insert(vaccine);
 
-            requireActivity().onBackPressed();
+                // UI Thread
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(),
+                            "Aşı eklendi",
+                            Toast.LENGTH_SHORT).show();
+                    requireActivity().onBackPressed();
+                });
+            });
         });
 
         return view;

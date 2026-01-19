@@ -37,7 +37,6 @@
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
 
     <!-- CONTENT CARD -->
@@ -55,7 +54,6 @@
             android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
     </com.google.android.material.card.MaterialCardView>
 
     <!-- ➕ FLOATING ACTION BUTTON -->
@@ -69,5 +67,13 @@
         app:tint="@android:color/white"
         app:backgroundTint="@color/purple_500"
         android:layout_gravity="end"/>
+
+    <!-- 🔹 FRAGMENT CONTAINER (SADECE EKLENDİ) -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
 
 </LinearLayout>

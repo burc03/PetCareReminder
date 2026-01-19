@@ -17,6 +17,8 @@ import java.util.Calendar;
 
 public class AddVaccineActivity extends AppCompatActivity {
 
+    // Author: Burcu Arıcı
+
     private int petId;
     private EditText etDate;
 

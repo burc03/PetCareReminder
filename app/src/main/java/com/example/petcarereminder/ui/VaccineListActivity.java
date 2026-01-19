@@ -19,6 +19,8 @@ import java.util.List;
 
 public class VaccineListActivity extends AppCompatActivity {
 
+    // Author: Burcu Arıcı
+
     private int petId;
     private VaccineAdapter adapter;
 
