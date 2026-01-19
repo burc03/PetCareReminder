@@ -27,14 +27,24 @@
             android:name=".ui.MainActivity"
             android:exported="false" />
 
+        <!-- PET LIST -->
+        <activity
+            android:name=".ui.PetListActivity"
+            android:exported="false" />
+
         <!-- ADD PET -->
         <activity
             android:name=".ui.AddPetActivity"
             android:exported="false" />
 
-        <!-- PET LIST -->
+        <!-- 🆕 VACCINE LIST -->
         <activity
-            android:name=".ui.PetListActivity"
+            android:name=".ui.VaccineListActivity"
+            android:exported="false" />
+
+        <!-- 🆕 ADD VACCINE -->
+        <activity
+            android:name=".ui.AddVaccineActivity"
             android:exported="false" />
 
     </application>

@@ -8,28 +8,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.petcarereminder.R;
-import com.example.petcarereminder.data.PetRepository;
-import com.example.petcarereminder.model.PetModel;
+import com.example.petcarereminder.data.local.AppDatabase;
+import com.example.petcarereminder.data.local.PetEntity;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class AddPetActivity extends AppCompatActivity {
 
-    private boolean editMode = false;
-    private int editIndex = -1;
+    private int petId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pet);
 
-        // 🔙 TOOLBAR GERİ
+        // 🔙 Toolbar
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         toolbar.setNavigationOnClickListener(v -> finish());
 
         EditText etName = findViewById(R.id.etPetName);
@@ -37,22 +31,24 @@ public class AddPetActivity extends AppCompatActivity {
         EditText etAge = findViewById(R.id.etPetAge);
         Button btnSave = findViewById(R.id.btnSavePet);
 
-        // 🔹 Edit mode kontrolü
-        editMode = getIntent().getBooleanExtra("edit_mode", false);
-        editIndex = getIntent().getIntExtra("pet_index", -1);
+        petId = getIntent().getIntExtra("pet_id", -1);
 
-        // ✏️ DÜZENLEME MODU
-        if (editMode && editIndex != -1) {
-            PetModel pet = PetRepository.getPet(editIndex);
+        // ✏️ Edit mode → veriyi doldur
+        if (petId != -1) {
+            PetEntity pet =
+                    AppDatabase.getInstance(this)
+                            .petDao()
+                            .getById(petId);
+
             if (pet != null) {
-                etName.setText(pet.getName());
-                etType.setText(pet.getType());
-                etAge.setText(String.valueOf(pet.getAge()));
+                etName.setText(pet.name);
+                etType.setText(pet.type);
+                etAge.setText(String.valueOf(pet.age));
                 btnSave.setText("Güncelle");
             }
         }
 
-        // 💾 KAYDET / GÜNCELLE
+        // 💾 Kaydet / Güncelle
         btnSave.setOnClickListener(v -> {
 
             String name = etName.getText().toString().trim();
@@ -67,19 +63,23 @@ public class AddPetActivity extends AppCompatActivity {
             int age;
             try {
                 age = Integer.parseInt(ageText);
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, "Yaş geçerli bir sayı olmalı", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "Yaş sayı olmalı", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            PetModel pet = new PetModel(name, type, age);
+            PetEntity pet = new PetEntity();
+            pet.name = name;
+            pet.type = type;
+            pet.age = age;
 
-            if (editMode && editIndex != -1) {
-                PetRepository.updatePet(editIndex, pet);
-                Toast.makeText(this, "Hayvan güncellendi", Toast.LENGTH_SHORT).show();
+            if (petId != -1) {
+                pet.id = petId;
+                AppDatabase.getInstance(this).petDao().update(pet);
+                Toast.makeText(this, "Güncellendi", Toast.LENGTH_SHORT).show();
             } else {
-                PetRepository.addPet(pet);
-                Toast.makeText(this, "Hayvan eklendi", Toast.LENGTH_SHORT).show();
+                AppDatabase.getInstance(this).petDao().insert(pet);
+                Toast.makeText(this, "Eklendi", Toast.LENGTH_SHORT).show();
             }
 
             finish();

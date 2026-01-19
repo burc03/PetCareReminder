@@ -20,10 +20,13 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_pet"
-            app:tint="@color/purple_500"
-            android:contentDescription="Pet Icon"/>
+            android:contentDescription="Pet Icon"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/purple_500"/>
 
-        <!-- TEXT AREA -->
+        <!-- TEXT -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginStart="16dp"
@@ -33,7 +36,6 @@
 
             <TextView
                 android:id="@+id/tvPetName"
-                android:text="Hayvan Adı"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#263238"
@@ -42,15 +44,14 @@
 
             <TextView
                 android:id="@+id/tvPetInfo"
-                android:text="Tür • Yaş"
                 android:textSize="14sp"
                 android:textColor="#607D8B"
                 android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
         </LinearLayout>
 
+        <!-- ACTIONS -->
         <!-- ACTIONS -->
         <LinearLayout
             android:orientation="vertical"
@@ -59,24 +60,25 @@
 
             <ImageButton
                 android:id="@+id/btnEdit"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
-                app:tint="@color/purple_500"
-                android:contentDescription="Edit"/>
+                android:contentDescription="Hayvanı düzenle"
+                android:padding="6dp"
+                app:tint="@color/purple_500"/>
 
             <ImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
-                app:tint="@android:color/holo_red_dark"
-                android:contentDescription="Delete"/>
-
+                android:contentDescription="Hayvanı sil"
+                android:padding="6dp"
+                app:tint="@android:color/holo_red_dark"/>
         </LinearLayout>
 
-    </LinearLayout>
 
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

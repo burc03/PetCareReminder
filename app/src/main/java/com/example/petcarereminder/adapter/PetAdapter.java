@@ -6,67 +6,81 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petcarereminder.R;
-import com.example.petcarereminder.data.PetRepository;
-import com.example.petcarereminder.model.PetModel;
+import com.example.petcarereminder.data.local.AppDatabase;
+import com.example.petcarereminder.data.local.PetEntity;
 import com.example.petcarereminder.ui.AddPetActivity;
+import com.example.petcarereminder.ui.VaccineListActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
-public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
+public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
 
-    private final List<PetModel> petList;
     private final Context context;
+    private final List<PetEntity> petList;
 
-    public PetAdapter(Context context, List<PetModel> petList) {
+    public PetAdapter(Context context, List<PetEntity> petList) {
         this.context = context;
         this.petList = petList;
     }
 
     @NonNull
     @Override
-    public PetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_pet, parent, false);
-        return new PetViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PetViewHolder holder, int position) {
-        PetModel pet = petList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        PetEntity pet = petList.get(position);
 
-        holder.tvName.setText(pet.getName());
-        holder.tvInfo.setText(pet.getType() + " • " + pet.getAge() + " yaş");
+        holder.tvPetName.setText(pet.name);
+        holder.tvPetInfo.setText(pet.type + " • " + pet.age + " yaş");
+
+        // 🐾 ICON → AŞI LİSTESİ
+        holder.imgPet.setOnClickListener(v -> {
+            Intent intent = new Intent(context, VaccineListActivity.class);
+            intent.putExtra("pet_id", pet.id);
+            context.startActivity(intent);
+        });
 
         // ✏️ DÜZENLE
         holder.btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(context, AddPetActivity.class);
-            intent.putExtra("edit_mode", true);
-            intent.putExtra("pet_index", holder.getBindingAdapterPosition());
+            intent.putExtra("pet_id", pet.id);
             context.startActivity(intent);
         });
 
-        // 🗑️ SİL (ONAYLI)
-        holder.btnDelete.setOnClickListener(v -> {
-            int pos = holder.getBindingAdapterPosition();
-            if (pos == RecyclerView.NO_POSITION) return;
+        // 🗑️ SİL
+        holder.btnDelete.setOnClickListener(v ->
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Hayvan Sil")
+                        .setMessage(pet.name + " silinsin mi?")
+                        .setPositiveButton("Sil", (d, w) -> {
 
-            new MaterialAlertDialogBuilder(context)
-                    .setTitle("Hayvan Sil")
-                    .setMessage(pet.getName() + " silinsin mi?")
-                    .setPositiveButton("Sil", (dialog, which) -> {
-                        PetRepository.removePet(pos);
-                        notifyItemRemoved(pos);
-                    })
-                    .setNegativeButton("İptal", null)
-                    .show();
-        });
+                            int pos = holder.getAdapterPosition();
+                            if (pos != RecyclerView.NO_POSITION) {
+
+                                AppDatabase.getInstance(context)
+                                        .petDao()
+                                        .delete(pet);
+
+                                petList.remove(pos);
+                                notifyItemRemoved(pos);
+                            }
+                        })
+                        .setNegativeButton("İptal", null)
+                        .show()
+        );
     }
 
     @Override
@@ -74,17 +88,22 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         return petList.size();
     }
 
-    static class PetViewHolder extends RecyclerView.ViewHolder {
+    // =======================
+    // VIEW HOLDER
+    // =======================
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvInfo;
+        ImageView imgPet;
+        TextView tvPetName, tvPetInfo;
         ImageButton btnEdit, btnDelete;
 
-        public PetViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvName = itemView.findViewById(R.id.tvPetName);
-            tvInfo = itemView.findViewById(R.id.tvPetInfo);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
+        ViewHolder(View v) {
+            super(v);
+            imgPet = v.findViewById(R.id.imgPet);
+            tvPetName = v.findViewById(R.id.tvPetName);
+            tvPetInfo = v.findViewById(R.id.tvPetInfo);
+            btnEdit = v.findViewById(R.id.btnEdit);
+            btnDelete = v.findViewById(R.id.btnDelete);
         }
     }
 }
