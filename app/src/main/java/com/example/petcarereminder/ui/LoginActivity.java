@@ -3,6 +3,7 @@ package com.example.petcarereminder.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,59 +22,67 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LoginActivity extends AppCompatActivity {
 
     // Author: Burcu Arıcı
+    // Feature: Login & Splash Screen handling (API 25 compatible)
+
     private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        prefs = getSharedPreferences("login_prefs", MODE_PRIVATE);
+        // ⏳ Splash ekranın görünmesi için kısa gecikme
+        new Handler().postDelayed(() -> {
 
-        // 🔹 Daha önce hatırlandıysa direkt Main
-        if (prefs.getBoolean("remember", false)) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
+            setContentView(R.layout.activity_login);
 
-        TextInputEditText etEmail = findViewById(R.id.etEmail);
-        TextInputEditText etPassword = findViewById(R.id.etPassword);
-        CheckBox cbRememberMe = findViewById(R.id.cbRememberMe);
-        Button btnLogin = findViewById(R.id.btnLogin);
-        TextView tvRegister = findViewById(R.id.tvRegister);
+            prefs = getSharedPreferences("login_prefs", MODE_PRIVATE);
 
-        // 🔹 Boş alana tıklayınca klavyeyi kapat
-        findViewById(R.id.loginRoot).setOnClickListener(v -> hideKeyboard());
-
-        btnLogin.setOnClickListener(v -> {
-            String email = etEmail.getText() == null ? "" : etEmail.getText().toString().trim();
-            String password = etPassword.getText() == null ? "" : etPassword.getText().toString().trim();
-
-            if (email.isEmpty() || password.isEmpty()) {
-                showWarningPopup("Email ve şifre zorunludur");
+            // 🔹 Daha önce hatırlandıysa direkt Main
+            if (prefs.getBoolean("remember", false)) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
                 return;
             }
 
-            // 🔹 DEMO AMAÇLI SABİT GİRİŞ
-            if (email.equals("test@test.com") && password.equals("1234")) {
+            TextInputEditText etEmail = findViewById(R.id.etEmail);
+            TextInputEditText etPassword = findViewById(R.id.etPassword);
+            CheckBox cbRememberMe = findViewById(R.id.cbRememberMe);
+            Button btnLogin = findViewById(R.id.btnLogin);
+            TextView tvRegister = findViewById(R.id.tvRegister);
 
-                if (cbRememberMe.isChecked()) {
-                    prefs.edit().putBoolean("remember", true).apply();
+            // 🔹 Boş alana tıklayınca klavyeyi kapat
+            findViewById(R.id.loginRoot).setOnClickListener(v -> hideKeyboard());
+
+            btnLogin.setOnClickListener(v -> {
+                String email = etEmail.getText() == null ? "" : etEmail.getText().toString().trim();
+                String password = etPassword.getText() == null ? "" : etPassword.getText().toString().trim();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    showWarningPopup("Email ve şifre zorunludur");
+                    return;
                 }
 
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                // 🔹 DEMO AMAÇLI SABİT GİRİŞ
+                if (email.equals("test@test.com") && password.equals("1234")) {
 
-            } else {
-                showWarningPopup("Email veya şifre hatalı");
-            }
-        });
+                    if (cbRememberMe.isChecked()) {
+                        prefs.edit().putBoolean("remember", true).apply();
+                    }
 
-        // 🔹 Üye Ol → Register
-        tvRegister.setOnClickListener(v ->
-                startActivity(new Intent(this, RegisterActivity.class))
-        );
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+
+                } else {
+                    showWarningPopup("Email veya şifre hatalı");
+                }
+            });
+
+            // 🔹 Üye Ol → Register
+            tvRegister.setOnClickListener(v ->
+                    startActivity(new Intent(this, RegisterActivity.class))
+            );
+
+        }, 1500); // ⏱ 0.8 saniye splash süresi
     }
 
     // ❗ UYARI POPUP (KIRMIZI İKON)
