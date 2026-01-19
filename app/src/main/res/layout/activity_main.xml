@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#F6F7FB"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TOOLBAR (LOGOLU + PROFİL MENÜ) -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        app:menu="@menu/menu_main"
+        app:elevation="6dp"
+        app:titleCentered="false">
+
+        <!-- TOOLBAR LOGO -->
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/petlogo"
+            android:contentDescription="Pet Logo"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_main_background"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
+
+        <!-- ANA LOGO -->
+            <ImageView
+                android:src="@mipmap/petlogo"
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp"
+                android:contentDescription="Pet Logo"/>
+
+            <!-- HAYVAN EKLE -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAddPet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:text="🐶 Hayvan Ekle"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#263238"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="Yeni bir hayvan ekle"
+                        android:textSize="14sp"
+                        android:textColor="#607D8B"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- HAYVAN LİSTESİ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPetList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:text="📋 Hayvan Listesi"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#263238"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="Eklenen hayvanları görüntüle"
+                        android:textSize="14sp"
+                        android:textColor="#607D8B"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ÇIKIŞ BUTONU (DAHA AŞAĞIDA) -->
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="48dp"
+                android:backgroundTint="#E53935"
+                android:text="Çıkış Yap"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

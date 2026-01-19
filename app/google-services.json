@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "405419468175",
+    "project_id": "petcarereminder-36790",
+    "storage_bucket": "petcarereminder-36790.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405419468175:android:36d266aa86df0ae3e197fa",
+        "android_client_info": {
+          "package_name": "com.example.petcarereminder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkA-yGFHnyS4UEPvER_uA3A6u0f8HT_us"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
